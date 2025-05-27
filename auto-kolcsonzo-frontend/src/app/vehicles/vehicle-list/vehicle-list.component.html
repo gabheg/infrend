@@ -1,0 +1,49 @@
+<div class="container mt-3">
+  <h2>Vehicles</h2>
+
+  <button (click)="goToCreateVehicle()" class="btn btn-primary mb-3">
+    Add New Vehicle
+  </button>
+
+  <table class="table table-bordered" *ngIf="!loading && vehicles.length > 0">
+    <thead>
+      <tr>
+        <th>License Plate</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let vehicle of filteredVehicles">
+        <td>{{ vehicle.licensePlate }}</td>
+        <td>{{ vehicle.type }}</td>
+        <td>
+          <span 
+            [ngClass]="{
+              'bg-success': vehicle.status === 'free',
+              'bg-warning': vehicle.status === 'rented',
+              'bg-danger': vehicle.status === 'scrapped'
+            }"
+            class="text-white px-3 py-1 rounded-pill d-inline-block"
+            style="min-width: 70px; text-align: center;"
+          >
+            {{ vehicle.status }}
+          </span>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-info me-2" (click)="goToEditVehicle(vehicle.id!)">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteVehicle(vehicle.id!)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && vehicles.length === 0">
+    No vehicles found.
+  </div>
+
+  <div *ngIf="loading">
+    Loading vehicles...
+  </div>
+</div>

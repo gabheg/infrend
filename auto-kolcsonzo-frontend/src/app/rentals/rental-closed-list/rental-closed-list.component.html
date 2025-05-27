@@ -1,0 +1,10 @@
+<div *ngIf="rental">
+    <h3>Closed Rental Details</h3>
+    <p><strong>Client:</strong> {{ rental.client.name }}</p>
+    <p><strong>Vehicle:</strong> {{ rental.vehicle.manufacturer }} ({{ rental.vehicle.licensePlate }})</p>
+    <p><strong>Start Date:</strong> {{ rental.startDate | date: 'shortDate' }}</p>
+    <p><strong>End Date:</strong> {{ rental.endDate | date: 'shortDate' }}</p>
+    <p><strong>Status:</strong> {{ rental.status }}</p>
+    <p *ngIf="rental.totalPrice !== undefined"><strong>Total Price:</strong> {{ rental.totalPrice | currency: 'Ft' : 'symbol' : '1.0-0' }}</p>
+  </div>
+  

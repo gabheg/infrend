@@ -1,0 +1,99 @@
+<div class="container mt-4">
+  <h2>Add New Vehicle</h2>
+
+  <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="type" class="form-label">Vehicle Type *</label>
+      <select id="type" formControlName="type" class="form-select" [class.is-invalid]="vehicleForm.get('type')?.invalid && (vehicleForm.get('type')?.dirty || vehicleForm.get('type')?.touched)">
+        <option value="">Select vehicle type</option>
+        <option value="car">Car</option>
+        <option value="boat">Boat</option>
+      </select>
+      <div *ngIf="vehicleForm.get('type')?.invalid && (vehicleForm.get('type')?.dirty || vehicleForm.get('type')?.touched)" class="invalid-feedback">
+        <div *ngIf="vehicleForm.get('type')?.errors?.['required']">Vehicle type is required.</div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="manufacturer" class="form-label">Manufacturer *</label>
+      <input id="manufacturer" type="text" formControlName="manufacturer" class="form-control" [class.is-invalid]="vehicleForm.get('manufacturer')?.invalid && (vehicleForm.get('manufacturer')?.dirty || vehicleForm.get('manufacturer')?.touched)" />
+      <div *ngIf="vehicleForm.get('manufacturer')?.invalid && (vehicleForm.get('manufacturer')?.dirty || vehicleForm.get('manufacturer')?.touched)" class="invalid-feedback">
+        <div *ngIf="vehicleForm.get('manufacturer')?.errors?.['required']">Manufacturer is required.</div>
+        <div *ngIf="vehicleForm.get('manufacturer')?.errors?.['minlength']">Manufacturer must be at least 2 characters long.</div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="licensePlate" class="form-label">License Plate *</label>
+      <input id="licensePlate" type="text" formControlName="licensePlate" class="form-control" [class.is-invalid]="vehicleForm.get('licensePlate')?.invalid && (vehicleForm.get('licensePlate')?.dirty || vehicleForm.get('licensePlate')?.touched)" />
+      <div *ngIf="vehicleForm.get('licensePlate')?.invalid && (vehicleForm.get('licensePlate')?.dirty || vehicleForm.get('licensePlate')?.touched)" class="invalid-feedback">
+        <div *ngIf="vehicleForm.get('licensePlate')?.errors?.['required']">License plate is required.</div>
+        <div *ngIf="vehicleForm.get('licensePlate')?.errors?.['minlength']">License plate must be at least 3 characters long.</div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="chassisNumber" class="form-label">Chassis Number *</label>
+      <input id="chassisNumber" type="text" formControlName="chassisNumber" class="form-control" [class.is-invalid]="vehicleForm.get('chassisNumber')?.invalid && (vehicleForm.get('chassisNumber')?.dirty || vehicleForm.get('chassisNumber')?.touched)" />
+      <div *ngIf="vehicleForm.get('chassisNumber')?.invalid && (vehicleForm.get('chassisNumber')?.dirty || vehicleForm.get('chassisNumber')?.touched)" class="invalid-feedback">
+        <div *ngIf="vehicleForm.get('chassisNumber')?.errors?.['required']">Chassis number is required.</div>
+        <div *ngIf="vehicleForm.get('chassisNumber')?.errors?.['minlength']">Chassis number must be at least 5 characters long.</div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="purchaseDate" class="form-label">Purchase Date *</label>
+      <input id="purchaseDate" type="date" formControlName="purchaseDate" class="form-control" [class.is-invalid]="vehicleForm.get('purchaseDate')?.invalid && (vehicleForm.get('purchaseDate')?.dirty || vehicleForm.get('purchaseDate')?.touched)" />
+      <div *ngIf="vehicleForm.get('purchaseDate')?.invalid && (vehicleForm.get('purchaseDate')?.dirty || vehicleForm.get('purchaseDate')?.touched)" class="invalid-feedback">
+        <div *ngIf="vehicleForm.get('purchaseDate')?.errors?.['required']">Purchase date is required.</div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="serialNumber" class="form-label">Serial Number *</label>
+      <input id="serialNumber" type="text" formControlName="serialNumber" class="form-control" [class.is-invalid]="vehicleForm.get('serialNumber')?.invalid && (vehicleForm.get('serialNumber')?.dirty || vehicleForm.get('serialNumber')?.touched)" />
+      <div *ngIf="vehicleForm.get('serialNumber')?.invalid && (vehicleForm.get('serialNumber')?.dirty || vehicleForm.get('serialNumber')?.touched)" class="invalid-feedback">
+        <div *ngIf="vehicleForm.get('serialNumber')?.errors?.['required']">Serial number is required.</div>
+        <div *ngIf="vehicleForm.get('serialNumber')?.errors?.['minlength']">Serial number must be at least 3 characters long.</div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="rentalPrice" class="form-label">Rental Price (Ft) *</label>
+      <input id="rentalPrice" type="number" formControlName="rentalPrice" class="form-control" min="0" step="0.01" [class.is-invalid]="vehicleForm.get('rentalPrice')?.invalid && (vehicleForm.get('rentalPrice')?.dirty || vehicleForm.get('rentalPrice')?.touched)" />
+      <div *ngIf="vehicleForm.get('rentalPrice')?.invalid && (vehicleForm.get('rentalPrice')?.dirty || vehicleForm.get('rentalPrice')?.touched)" class="invalid-feedback">
+        <div *ngIf="vehicleForm.get('rentalPrice')?.errors?.['required']">Rental price is required.</div>
+        <div *ngIf="vehicleForm.get('rentalPrice')?.errors?.['min']">Rental price must be greater than 0.</div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="kmPrice" class="form-label">Km Price (Ft/km) *</label>
+      <input id="kmPrice" type="number" formControlName="kmPrice" class="form-control" min="0" step="0.01" [class.is-invalid]="vehicleForm.get('kmPrice')?.invalid && (vehicleForm.get('kmPrice')?.dirty || vehicleForm.get('kmPrice')?.touched)" />
+      <div *ngIf="vehicleForm.get('kmPrice')?.invalid && (vehicleForm.get('kmPrice')?.dirty || vehicleForm.get('kmPrice')?.touched)" class="invalid-feedback">
+        <div *ngIf="vehicleForm.get('kmPrice')?.errors?.['required']">Km price is required.</div>
+        <div *ngIf="vehicleForm.get('kmPrice')?.errors?.['min']">Km price must be greater than 0.</div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="status" class="form-label">Status *</label>
+      <select id="status" formControlName="status" class="form-select" [class.is-invalid]="vehicleForm.get('status')?.invalid && (vehicleForm.get('status')?.dirty || vehicleForm.get('status')?.touched)">
+        <option value="">Select status</option>
+        <option value="free">Free</option>
+        <option value="rented">Rented</option>
+        <option value="scrapped">Scrapped</option>
+      </select>
+      <div *ngIf="vehicleForm.get('status')?.invalid && (vehicleForm.get('status')?.dirty || vehicleForm.get('status')?.touched)" class="invalid-feedback">
+        <div *ngIf="vehicleForm.get('status')?.errors?.['required']">Status is required.</div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="submitting || vehicleForm.invalid">
+      {{ submitting ? 'Saving...' : 'Save Vehicle' }}
+    </button>
+  </form>  
+  <div *ngIf="error" class="alert alert-danger mt-3">
+    {{ error }}
+  </div>
+</div>

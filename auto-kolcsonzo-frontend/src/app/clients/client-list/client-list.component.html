@@ -1,0 +1,37 @@
+<div class="container mt-3">
+    <h2>Clients</h2>
+    <button (click)="addClient()" class="btn btn-primary">Add New Client</button>
+  
+    <table class="table table-bordered" *ngIf="!loading && clients.length > 0">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Address</th>
+          <th>ID Number</th>
+          <th>Phone</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of clients">
+          <td>{{ client.name }}</td>
+          <td>{{ client.address }}</td>
+          <td>{{ client.idCardNumber }}</td>
+          <td>{{ client.phone }}</td>
+          <td>
+            <button class="btn btn-sm btn-info me-2" (click)="editClient(client.id!)">Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteClient(client.id!)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div *ngIf="!loading && clients.length === 0">
+      No clients found.
+    </div>
+  
+    <div *ngIf="loading">
+      Loading clients...
+    </div>
+  </div>
+  

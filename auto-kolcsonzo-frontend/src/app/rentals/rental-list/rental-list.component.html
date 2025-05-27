@@ -1,0 +1,66 @@
+<div class="container mt-3">
+  <h2>Rentals</h2>
+  <button (click)="addRental()" class="btn btn-primary mb-3">Add New Rental</button>
+
+  <table class="table table-bordered" *ngIf="!loading && rentals.length > 0">
+    <thead>
+      <tr>
+        <th>Client Name</th>
+        <th>Vehicle</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Status</th>
+        <th>Damaged?</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rental of rentals">
+        <td>{{ rental.client.name }}</td>
+        <td>{{ rental.vehicle.manufacturer }} ({{ rental.vehicle.licensePlate }})</td>
+        <td>{{ rental.startDate | date: 'shortDate' }}</td>
+        <td>{{ rental.endDate ? (rental.endDate | date: 'shortDate') : 'N/A' }}</td>
+        <td>
+          <span
+            [ngClass]="{
+              'bg-warning': rental.status.toLowerCase() === 'ongoing',
+              'bg-danger': rental.status.toLowerCase() === 'closed' && rental.damaged,
+              'bg-success': rental.status.toLowerCase() === 'closed' && !rental.damaged
+            }"
+            class="text-white px-3 py-1 rounded-pill d-inline-block"
+            style="min-width: 70px; text-align: center;"
+          >
+            {{ rental.status }}
+          </span>
+        </td>
+
+        <td class="text-center">
+          <input type="checkbox" [(ngModel)]="rental.damaged" [disabled]="rental.status.toLowerCase() !== 'ongoing'" />
+        </td>
+
+        <td>
+          <button class="btn btn-sm btn-info me-2" (click)="editRental(rental.id)">Edit</button>
+          <button class="btn btn-sm btn-danger me-2" (click)="deleteRental(rental.id)">Delete</button>
+          <button
+            class="btn btn-sm btn-warning me-2"
+            (click)="closeRental(rental.id, rental.damaged)"
+            [disabled]="rental.status.toLowerCase() !== 'ongoing'">
+            Close
+          </button>
+          <button class="btn btn-sm btn-success" (click)="viewDetails(rental.id)">View Details</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && rentals.length === 0">
+    No rentals found.
+  </div>
+
+  <div *ngIf="loading">
+    Loading rentals...
+  </div>
+
+  <!-- Closed Rentals Details Component -->
+  <app-rental-closed-list *ngIf="selectedRentalId" [rentalId]="selectedRentalId"></app-rental-closed-list>
+</div>
