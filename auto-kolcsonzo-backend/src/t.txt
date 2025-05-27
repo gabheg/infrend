@@ -1,0 +1,18 @@
+Folder PATH listing for volume data
+Volume serial number is FCBF-0E05
+D:.
+¦   data-source.ts
+¦   index.ts
+¦   t.txt
+¦   text.txt
+¦   
++---entity
+¦       Clients.ts
+¦       Rentals.ts
+¦       Vehicles.ts
+¦       
++---routes
+        client.ts
+        rental.ts
+        vehicle.ts
+        
