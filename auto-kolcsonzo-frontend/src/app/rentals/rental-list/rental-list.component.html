@@ -41,9 +41,12 @@
         <td>
           <button class="btn btn-sm btn-info me-2" (click)="editRental(rental.id)">Edit</button>
           <button class="btn btn-sm btn-danger me-2" (click)="deleteRental(rental.id)">Delete</button>
+          <div *ngIf="rental.status === 'ongoing'">
+            <input type="number" [(ngModel)]="rental.kilometersDriven" placeholder="Kilometers Driven" />
+          </div>
           <button
             class="btn btn-sm btn-warning me-2"
-            (click)="closeRental(rental.id, rental.damaged)"
+            (click)="closeRental(rental)"
             [disabled]="rental.status.toLowerCase() !== 'ongoing'">
             Close
           </button>
@@ -60,7 +63,5 @@
   <div *ngIf="loading">
     Loading rentals...
   </div>
-
-  <!-- Closed Rentals Details Component -->
   <app-rental-closed-list *ngIf="selectedRentalId" [rentalId]="selectedRentalId"></app-rental-closed-list>
 </div>

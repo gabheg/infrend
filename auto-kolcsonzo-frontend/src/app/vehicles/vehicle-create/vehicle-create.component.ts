@@ -11,17 +11,17 @@ import { Vehicle } from '../../models/vehicle';
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './vehicle-create.component.html',
 })
-export class VehicleCreateComponent implements OnInit {  // <-- add implements OnInit
+export class VehicleCreateComponent implements OnInit {
   vehicleForm: FormGroup;
   submitting = false;
   error = '';
-  vehicleId?: number; // store the id if editing
+  vehicleId?: number;
 
   constructor(
     private fb: FormBuilder,
     private vehicleService: VehicleService,
     private router: Router,
-    private route: ActivatedRoute  // <-- inject ActivatedRoute
+    private route: ActivatedRoute
   ) {
     this.vehicleForm = this.fb.group({
       type: ['car', Validators.required],
@@ -49,9 +49,8 @@ export class VehicleCreateComponent implements OnInit {  // <-- add implements O
   loadVehicle(id: number): void {
     this.vehicleService.getVehicle(id).subscribe({
       next: (vehicle: Vehicle) => {
-        // Format purchaseDate to 'YYYY-MM-DD' if needed
         const formattedPurchaseDate = vehicle.purchaseDate
-          ? vehicle.purchaseDate.split('T')[0]  // Ensures YYYY-MM-DD format
+          ? vehicle.purchaseDate.split('T')[0]
           : '';
   
         this.vehicleForm.patchValue({
@@ -59,7 +58,7 @@ export class VehicleCreateComponent implements OnInit {  // <-- add implements O
           manufacturer: vehicle.manufacturer,
           licensePlate: vehicle.licensePlate,
           chassisNumber: vehicle.chassisNumber,
-          purchaseDate: formattedPurchaseDate,  // Ensure correct format here
+          purchaseDate: formattedPurchaseDate,
           serialNumber: vehicle.serialNumber,
           rentalPrice: vehicle.rentalPrice,
           kmPrice: vehicle.kmPrice,
@@ -78,31 +77,25 @@ export class VehicleCreateComponent implements OnInit {  // <-- add implements O
       return;
     }
   
-    // Ensure rentalPrice is a number
     const rentalPrice = parseFloat(this.vehicleForm.value.rentalPrice);
   
-    // Ensure kmPrice is a number
     const kmPrice = parseFloat(this.vehicleForm.value.kmPrice);
   
-    // Ensure purchaseDate is in the correct format (YYYY-MM-DD)
     const purchaseDate = new Date(this.vehicleForm.value.purchaseDate);
-    const formattedDate = purchaseDate.toISOString().split('T')[0]; // "YYYY-MM-DD"
+    const formattedDate = purchaseDate.toISOString().split('T')[0];
   
-    // Update the form value with the correctly formatted date and numeric fields
     this.vehicleForm.patchValue({
       purchaseDate: formattedDate,
-      rentalPrice: rentalPrice,  // Ensure rentalPrice is sent as a number
-      kmPrice: kmPrice,          // Ensure kmPrice is sent as a number
+      rentalPrice: rentalPrice,
+      kmPrice: kmPrice,
     });
   
-    // Log the form data to see the actual data being sent
     console.log('Form Data:', this.vehicleForm.value);
   
     this.submitting = true;
     this.error = '';
   
     if (this.vehicleId) {
-      // Update existing vehicle
       this.vehicleService.updateVehicle(this.vehicleId, this.vehicleForm.value).subscribe({
         next: () => {
           this.submitting = false;
@@ -115,7 +108,6 @@ export class VehicleCreateComponent implements OnInit {  // <-- add implements O
         },
       });
     } else {
-      // Create new vehicle
       this.vehicleService.createVehicle(this.vehicleForm.value).subscribe({
         next: () => {
           this.submitting = false;
@@ -129,9 +121,4 @@ export class VehicleCreateComponent implements OnInit {  // <-- add implements O
       });
     }
   }
-  
-  
-  
-  
-  
 }

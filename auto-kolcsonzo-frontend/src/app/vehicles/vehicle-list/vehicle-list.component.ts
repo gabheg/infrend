@@ -3,28 +3,31 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { VehicleService } from '../../services/vehicle.service';
 import { Vehicle } from '../../models/vehicle';
-import { FormsModule } from '@angular/forms'; // For ngModel binding in the template
+import { FormsModule } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-vehicle-list',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Import FormsModule for ngModel
+  imports: [CommonModule, FormsModule],
   templateUrl: './vehicle-list.component.html',
 })
 export class VehicleListComponent implements OnInit {
   vehicles: Vehicle[] = [];
   filteredVehicles: Vehicle[] = [];
-  searchQuery: string = ''; // Store the search query
-  statusFilter: string = ''; // Store the selected status filter (all, free, rented)
+  searchQuery: string = '';
+  statusFilter: string = '';
   loading = true;
 
   constructor(
     private vehicleService: VehicleService,
-    private router: Router
+    private router: Router,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
     this.loadVehicles();
+    this.titleService.setTitle('Vehicles | Car Rental');
   }
 
   loadVehicles(): void {
@@ -32,7 +35,7 @@ export class VehicleListComponent implements OnInit {
     this.vehicleService.getVehicles().subscribe({
       next: (data) => {
         this.vehicles = data;
-        this.filteredVehicles = data; // Initially, all vehicles are shown
+        this.filteredVehicles = data;
         this.loading = false;
       },
       error: () => {
@@ -43,7 +46,6 @@ export class VehicleListComponent implements OnInit {
   }
 
   onSearch(): void {
-    // Filter vehicles based on search query and status filter
     this.filteredVehicles = this.vehicles.filter((vehicle) =>
       this.matchSearch(vehicle)
     );
@@ -55,7 +57,6 @@ export class VehicleListComponent implements OnInit {
       vehicle.licensePlate.toLowerCase().includes(search) ||
       vehicle.type.toLowerCase().includes(search);
 
-    // Ensure both `vehicle.status` and `statusFilter` are treated as strings
     const matchesStatus =
       !this.statusFilter ||
       vehicle.status.toLowerCase() === this.statusFilter.toLowerCase();
@@ -63,12 +64,10 @@ export class VehicleListComponent implements OnInit {
     return matchesSearch && matchesStatus;
   }
 
-  // Create vehicle
   goToCreateVehicle(): void {
     this.router.navigate(['/vehicles/create']);
   }
 
-  // Delete vehicle
   deleteVehicle(id?: number): void {
     if (id === undefined) {
       alert('Vehicle ID is undefined!');

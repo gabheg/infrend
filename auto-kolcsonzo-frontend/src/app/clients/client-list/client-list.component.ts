@@ -3,6 +3,7 @@ import { Client } from '../../models/client';
 import { ClientService } from '../../services/client.service';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Title } from '@angular/platform-browser';
 
 
 
@@ -16,9 +17,10 @@ export class ClientListComponent implements OnInit {
   clients: Client[] = [];
   loading = true;
 
-  constructor(private clientService: ClientService, private router: Router) {}
+  constructor(private clientService: ClientService, private router: Router, private titleService: Title) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('Clients | Car Rental');
     this.loadClients();
   }
 

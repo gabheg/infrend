@@ -7,7 +7,7 @@ import { Rental } from '../models/rental';
   providedIn: 'root',
 })
 export class RentalService {
-  private apiUrl = 'http://localhost:3000/rentals'; // Backend API URL
+  private apiUrl = 'http://localhost:3000/rentals';
 
   constructor(private http: HttpClient) {}
 

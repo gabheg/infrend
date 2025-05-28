@@ -5,6 +5,7 @@ import { RentalService } from '../../services/rental.service';
 import { Rental } from '../../models/rental';
 import { RentalClosedListComponent } from '../rental-closed-list/rental-closed-list.component'; 
 import { FormsModule } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -21,11 +22,13 @@ export class RentalListComponent implements OnInit {
 
   constructor(
     private rentalService: RentalService,
-    private router: Router
+    private router: Router,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
     this.loadRentals();
+    this.titleService.setTitle('Rentals | Car Rental');
   }
 
   loadRentals(): void {
@@ -48,7 +51,6 @@ export class RentalListComponent implements OnInit {
 
   editRental(id: number): void {
     console.log('Edit rental with id:', id);
-    // Redirect to edit page with the rental ID
     this.router.navigate([`/rentals/edit/${id}`]);
   }
 
@@ -62,15 +64,18 @@ export class RentalListComponent implements OnInit {
     }
   }
 
-  closeRental(id: number, damaged: boolean): void {
+  closeRental(rental: any): void {
     if (!confirm('Are you sure you want to close this rental?')) {
       return;
     }
   
     const endDate = new Date().toISOString();
-    const kilometersDriven = 100; // You can update this to get actual km driven if you want
   
-    this.rentalService.closeRental(id, { endDate, kilometersDriven, damaged }).subscribe({
+    this.rentalService.closeRental(rental.id, {
+      endDate,
+      kilometersDriven: rental.kilometersDriven,
+      damaged: rental.damaged ?? false
+    }).subscribe({
       next: () => this.loadRentals(),
       error: (err) => console.error('Error closing rental', err),
     });

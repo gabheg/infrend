@@ -32,7 +32,7 @@ export class ClientCreateComponent implements OnInit {
     const clientId = this.activatedRoute.snapshot.paramMap.get('id');
     if (clientId) {
       this.isEditMode = true;
-      this.loadClientData(Number(clientId));  // Ensure the id is passed as a number
+      this.loadClientData(Number(clientId));
     } else {
       console.error('Invalid client ID');
     }
@@ -51,7 +51,6 @@ export class ClientCreateComponent implements OnInit {
 
   saveClient(): void {
     if (this.isEditMode) {
-      // For editing an existing client
       if (this.client.id) {
         this.clientService.updateClient(this.client.id, this.client).subscribe(
           (data) => {
@@ -63,7 +62,6 @@ export class ClientCreateComponent implements OnInit {
         );
       }
     } else {
-      // For creating a new client
       this.clientService.createClient(this.client).subscribe(
         (data) => {
           this.router.navigate(['/clients']);

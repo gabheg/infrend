@@ -3,13 +3,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Client } from '../models/client';  // make sure this path matches your project
+import { Client } from '../models/client';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClientService {
-  private baseUrl = 'http://localhost:3000/clients';  // your backend API endpoint
+  private baseUrl = 'http://localhost:3000/clients';
 
   constructor(private http: HttpClient) {}
 
@@ -22,7 +22,7 @@ export class ClientService {
   } 
 
   createClient(client: Client): Observable<Client> {
-    return this.http.post<Client>(this.baseUrl, client);  // Sending POST request
+    return this.http.post<Client>(this.baseUrl, client);
   }
 
   updateClient(id: number, client: Client): Observable<Client> {

@@ -14,7 +14,7 @@ export const routes: Routes = [
   { path: 'vehicles', component: VehicleListComponent },
   { path: 'vehicles/create', component: VehicleCreateComponent },
   { path: 'vehicles/edit/:id', component: VehicleCreateComponent },
-  { path: 'rentals', component: RentalListComponent },  // New route for rental list
+  { path: 'rentals', component: RentalListComponent },
   { path: 'rentals/create', component: RentalCreateComponent },
   { path: 'rentals/edit/:id', component: RentalCreateComponent },
 ];

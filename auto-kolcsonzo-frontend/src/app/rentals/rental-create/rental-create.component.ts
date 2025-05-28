@@ -6,7 +6,7 @@ import { RentalService } from '../../services/rental.service';
 import { Client } from '../../models/client';
 import { Vehicle } from '../../models/vehicle';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';  // <-- add Router for navigation
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-rental-create',
@@ -30,7 +30,7 @@ export class RentalCreateComponent implements OnInit {
     private clientService: ClientService,
     private vehicleService: VehicleService,
     private rentalService: RentalService,
-    private router: Router   // <-- inject Router
+    private router: Router
   ) {
     this.rentalForm = this.fb.group({
       client: ['', Validators.required],
@@ -77,16 +77,15 @@ export class RentalCreateComponent implements OnInit {
     const formValue = this.rentalForm.value;
   
     const rentalData = {
-      clientId: Number(formValue.client),   // map client to clientId number
-      vehicleId: Number(formValue.vehicle), // map vehicle to vehicleId number
-      startDate: formValue.startDate,       // date string in YYYY-MM-DD
-      endDate: formValue.endDate || null,   // include endDate if provided
+      clientId: Number(formValue.client),
+      vehicleId: Number(formValue.vehicle),
+      startDate: formValue.startDate,
+      endDate: formValue.endDate || null,
     };
   
     this.rentalService.createRental(rentalData).subscribe(
       () => {
         this.submitting = false;
-        // Navigate to the rentals list page after successful rental creation
         this.router.navigate(['/rentals']);
       },
       (error) => {

@@ -11,7 +11,7 @@ import { Rental } from '../../models/rental';
   styleUrls: ['./rental-closed-list.component.css']
 })
 export class RentalClosedListComponent implements OnInit, OnChanges {
-  @Input() rentalId!: number;  // ID of the rental to show (required)
+  @Input() rentalId!: number;
   rental?: Rental;
   loading = false;
   error?: string;
